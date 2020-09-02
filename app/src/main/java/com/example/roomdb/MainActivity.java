@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,11 @@ public Employee employee = new Employee();
     public Employee GetByIdEmployee(){
         String  name = editTextNameSearch.getText().toString();
         viewModelEmployee.getEmployeesById(name);
+        if (employee!= null) {
+            Toast.makeText(this, "Мы нашли его" +employee.getName(), Toast.LENGTH_SHORT).show();
+        } else {Toast.makeText(this, "Мы НЕЕЕ нашли его", Toast.LENGTH_SHORT).show();}
         return (employee);
+
     }
 
     public void OnClickButtonAdd(View view) {
@@ -71,8 +76,8 @@ public Employee employee = new Employee();
 
     public void OnClickButtonSearch(View view) {
         Employee employee = GetByIdEmployee();
-        textViewName.setText(employee.name);
-        textViewSalary.setText(employee.salary);
+        //textViewName.setText(employee.name);
+        //textViewSalary.setText(employee.salary);
     }
 
     public void searchItem(){
