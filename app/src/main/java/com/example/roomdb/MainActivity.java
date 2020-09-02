@@ -3,11 +3,9 @@ package com.example.roomdb;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
@@ -25,23 +23,24 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewSalary;
     EditText editTextName;
     EditText editTextSalary;
-    EditText editTextId;
+    EditText editTextNameSearch;
 private MainViewModelEmployee viewModelEmployee;
 private RecyclerView recyclerViewEmployee;
 private final ArrayList<Employee> employees= new ArrayList<>();
 public EmployeeAdapter employeeAdapter;
-
+public Employee employee = new Employee();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        searchItem();
         viewModelEmployee = ViewModelProviders.of(this).get(MainViewModelEmployee.class);
         recyclerViewEmployee =findViewById(R.id.viewEmployees);
         employeeAdapter = new EmployeeAdapter(employees);
         recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(this));
         getData();
-        recyclerViewEmployee.setAdapter(employeeAdapter);
+       recyclerViewEmployee.setAdapter(employeeAdapter);
             }
 
     private void getData(){
@@ -54,29 +53,16 @@ public EmployeeAdapter employeeAdapter;
         });
     }
 
- /*   public void InsertEmployee(String name, int salary){
+    public void InsertEmployee(String name, int salary){
         employee.name = name;
         employee.salary= salary;
-        employeeDao.insert(employee);
+        viewModelEmployee.insertEmployee(employee);
     }
 
-    public void GetAllEmployee(){
-        List<Employee> employees= employeeDao.getAll();
-    }
-
-    public Employee GetByIdEmployee(int id){
-        employee = employeeDao.getById(id);
+    public Employee GetByIdEmployee(){
+        String  name = editTextNameSearch.getText().toString();
+        viewModelEmployee.getEmployeesById(name);
         return (employee);
-    }
-
-    public void UpdateEmployee(int id, int newSalary){
-        Employee employee = GetByIdEmployee(id);
-        employee.salary = newSalary;
-        employeeDao.update(employee);
-    }
-
-    public void DeleteEmployee(int id){
-        employeeDao.delete(GetByIdEmployee(id));
     }
 
     public void OnClickButtonAdd(View view) {
@@ -84,16 +70,16 @@ public EmployeeAdapter employeeAdapter;
     }
 
     public void OnClickButtonSearch(View view) {
-        Employee employee =GetByIdEmployee(Integer.parseInt(editTextId.getText().toString()));
+        Employee employee = GetByIdEmployee();
         textViewName.setText(employee.name);
         textViewSalary.setText(employee.salary);
     }
 
     public void searchItem(){
-        editTextId = findViewById(R.id.editTextIdEmployee);
-        editTextName = findViewById(R.id.editTextEmployeeName);
-        editTextSalary = findViewById(R.id.editTextEmployeeSalary);
+        editTextNameSearch = findViewById(R.id.editTextNameSearch);
+        editTextName = findViewById(R.id.editTextName);
+        editTextSalary = findViewById(R.id.editTextSalary);
         textViewName = findViewById(R.id.textViewNameEmployee);
         textViewSalary = findViewById(R.id.textViewSalary);
-    }*/
+    }
 }

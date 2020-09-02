@@ -14,9 +14,8 @@ public interface EmployeeDao {              //имя таблице равно �
     @Query("SELECT * FROM employee")                    //забрать всё
     LiveData<List<Employee>> getAll();
 
-    @Query("SELECT * FROM employee WHERE id = :id")        //найти по id
-    //Employee findByName(String name);
-    LiveData<Employee> getById(int id);
+    @Query("SELECT * FROM employee WHERE name = :name")        //найти по id
+    Employee getById(String name);
 
     @Insert
     void insertAll (List<Employee> employees);  //вставить всё
